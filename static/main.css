@@ -1,0 +1,48 @@
+@import url(http://fonts.googleapis.com/css?family=Poiret+One);
+* { box-sizing: border-box; }
+nav {
+  background-color: grey; 
+}
+nav > ul {
+  padding: 0px;
+}
+nav > ul > li {
+  display: inline-block;
+  padding: 10px 30px 10px 30px;
+}
+nav > ul > li > a {
+  color: white;
+  text-decoration: none;
+}
+body {
+    text-align: center;
+}
+h1, h2, h3, h4, p {
+    font-family: 'Poiret One';
+}
+h1 {
+    font-style: bold;
+}
+.image > img {
+  width:1430px;
+  height:300px;
+}
+.time {
+  text-align: right;
+}
+nav > ul > li > ul {
+  background-color: grey;
+  list-style: none;
+  padding: 0;
+  position: absolute;
+  display: none;
+}
+nav > ul > li:hover {
+  background-color: none;
+}
+nav > ul > li > ul > li:hover {
+  background-color: lightgrey;
+}
+nav > ul > li:hover > ul {
+  display: block;
+}

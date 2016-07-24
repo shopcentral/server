@@ -1,0 +1,30 @@
+<%inherit file="layout.html"/>
+<%block name="pageTitle">Shop Central | Contribute Clothes</%block>
+
+<%def name="field(tname,fname)">
+        <tr>
+            <td class="label">
+                ${tname}:
+            </td>
+            <td>
+                <input type="text" name="${fname}" value="${name}">
+            </td>
+        </tr>
+</%def>
+
+<%block name="pageBody">
+  <h1 id = "title">Shop Central | Contribute Clothes</h1>
+  <p>If you have some clothes you want to contribute to my VR mall just fill out this simple form.</p><br>
+  <p>The form:</p>
+  <form method="post">
+    <table>
+        ${field("Name of Clothing","name")}
+        ${field("Description Of Clothing","description")}
+        ${field("Gender Of Clothing","gender")}
+        ${field("Price Of Clothing","price")}
+        ${field("Blender File Name","blenderFile")}
+        ${field("Shop","shop")}
+        <input type="submit">
+    </table>
+  </form>
+</%block>
