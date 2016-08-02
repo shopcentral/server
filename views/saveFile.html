@@ -13,17 +13,19 @@
 </%def>
 
 <%block name="pageBody">
-  <h1 id = "title">Shop Central | Contribute Clothes</h1>
+  <h1 id = "title">Shop Central | Contribute Stock</h1>
   <p>If you have some clothes you want to contribute to my VR mall just fill out this simple form.</p><br>
   <p>The form:</p>
   <form method="post">
     <table>
-        ${field("Name of Clothing","name")}
-        ${field("Description Of Clothing","description")}
-        ${field("Gender Of Clothing","gender")}
-        ${field("Price Of Clothing","price")}
+        ${field("Name","name")}
+        ${field("Description","description")}
+        ${field("Gender(optional)","gender")}
+        ${field("Price","price")}
         ${field("Blender File Name","blenderFile")}
         ${field("Shop","shop")}
+        ${field("Place","place")}
+        ${field("Position[x,y,z]","pos")}
         <input type="submit">
     </table>
   </form>

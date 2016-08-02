@@ -29,7 +29,7 @@ application = default_app()
 @bottle.route('/savefile')
 def showsavefile():
     parms= dict(description='',name='',price='',gender='',
-                blenderFile='',shop='')
+                blenderFile='',shop='',place="",pos="")
     return template('savefile.html',**parms)
     
 @bottle.post('/savefile')
@@ -37,7 +37,7 @@ def savefile():
     print('dir',request.method)
     form=request.forms
     print('form',form.keys())
-    database.clothes.insert(form)
+    database.stock.insert(form)
     return showsavefile()
 
 @bottle.route('/hello/<name>')
