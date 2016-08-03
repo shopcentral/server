@@ -31,15 +31,20 @@ def jsonTransver(store='central'):
     def process(stock):
         def field(key,value):
             def tolist(string):
-                if isinstance(string,list):
-                    return string
-                return [float(s) for s in string.split(',')]
-            keymap={'pos':tolist}
-            if key in keymap:
-                value = keymap[key](value)
+                if not isinstance(string,list):
+                    string = [float(s) for s in string.split(',')]
+                return {'x':string[0],'y':string[1],'z':string[2]}
+            mapfld={'pos':tolist}
+            if key in mapfld:
+                value = mapfld[key](value)
             return value
+
+        keymap={'blenderFile':'shape','name':'Name'}
         exclude= "_id",
-        return { key:field(key,item) for key,item in stock.items() if key not in exclude}
+        
+        res = { keymap.get(key,key):field(key,item) for key,item in stock.items() if key not in exclude}
+        #res['shape'] = res.get('blenderFile','')
+        return res
     ans = [process(stock) for stock in database.stock.find({"shop":store})]
     print(ans)
     return {"items":ans}
