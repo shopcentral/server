@@ -1,4 +1,4 @@
-#this is my main code
+#this is my main server code
 #COPYRIGHTED. DO NOT COPY.
 #YOU WILL BE FINED $999,999,999,999,999 INSTANTLY
 
@@ -25,6 +25,25 @@ def main(folder='', path='index.html'):
     return template(path,time=now)
 
 application = default_app()
+
+@bottle.route('/bourne/<store>')
+def jsonTransver(store='central'):
+    def process(stock):
+        def field(key,value):
+            def tolist(string):
+                if isinstance(string,list):
+                    return string
+                return [float(s) for s in string.split(',')]
+            keymap={'pos':tolist}
+            if key in keymap:
+                value = keymap[key](value)
+            return value
+        exclude= "_id",
+        return { key:field(key,item) for key,item in stock.items() if key not in exclude}
+    ans = [process(stock) for stock in database.stock.find({"shop":store})]
+    print(ans)
+    return {"items":ans}
+    
 
 @bottle.route('/savefile')
 def showsavefile():
