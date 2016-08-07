@@ -31,9 +31,12 @@ def jsonTransver(store='central'):
     def process(stock):
         def field(key,value):
             def tolist(string):
+                if not string:
+                    return ''
                 if not isinstance(string,list):
                     string = [float(s) for s in string.split(',')]
                 return {'x':string[0],'y':string[1],'z':string[2]}
+            
             mapfld={'pos':tolist}
             if key in mapfld:
                 value = mapfld[key](value)
@@ -43,9 +46,15 @@ def jsonTransver(store='central'):
         exclude= "_id",
         
         res = { keymap.get(key,key):field(key,item) for key,item in stock.items() if key not in exclude}
+        if not res['pos']:
+            res['mode'] = 1
+            del res['pos']
         #res['shape'] = res.get('blenderFile','')
         return res
+    def sorter(item):
+        return item['place']
     ans = [process(stock) for stock in database.stock.find({"shop":store})]
+    ans.sort(key=sorter)
     print(ans)
     return {"items":ans}
     
@@ -53,7 +62,7 @@ def jsonTransver(store='central'):
 @bottle.route('/savefile')
 def showsavefile():
     parms= dict(description='',name='',price='',gender='',
-                blenderFile='',shop='',place="",pos="")
+                blenderFile='',shop='',place="",pos="", scale="")
     return template('savefile.html',**parms)
     
 @bottle.post('/savefile')

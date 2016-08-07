@@ -14,10 +14,10 @@
 
 <%block name="pageBody">
   <h1 id = "title">Shop Central | Contribute Stock</h1>
-  <p>If you have some clothes you want to contribute to my VR mall just fill out this simple form.</p><br>
+  <p>If you have some stock you want to contribute to my VR mall just fill out this simple form.</p><br>
   <p>The form:</p>
   <form method="post">
-    <table>
+    <table align="center" class="formadd">
         ${field("Name","name")}
         ${field("Description","description")}
         ${field("Gender(optional)","gender")}
@@ -26,7 +26,8 @@
         ${field("Shop","shop")}
         ${field("Place","place")}
         ${field("Position x,y,z","pos")}
-        <input type="submit">
+        ${field("Scale","scale")}
+        <input type="submit" class="button">
     </table>
   </form>
 </%block>
