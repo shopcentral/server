@@ -1,5 +1,5 @@
 <%inherit file="layout.html"/>
-<%block name="pageTitle">Shop Central | Contribute Clothes</%block>
+<%block name="pageTitle">Shop Central | Contribute Stock</%block>
 
 <%def name="field(tname,fname)">
         <tr>
@@ -7,7 +7,7 @@
                 ${tname}:
             </td>
             <td>
-                <input type="text" name="${fname}" value="${name}">
+                <input type="text" name="${fname}" value="${field_dict.get(fname,'')}">
             </td>
         </tr>
 </%def>
@@ -15,12 +15,12 @@
 <%block name="pageBody">
   <h1 id = "title">Shop Central | Contribute Stock</h1>
   <p>If you have some stock you want to contribute to my VR mall just fill out this simple form.</p><br>
-  <p>The form:</p>
+  <h3>The form:</h3>
   <form method="post">
     <table align="center" class="formadd">
         ${field("Name","name")}
-        ${field("Description","description")}
-        ${field("Gender(optional)","gender")}
+        ${field("Description(optional)","description")}
+        ${field("Gender(only for clothes)","gender")}
         ${field("Price","price")}
         ${field("Blender File Name","blenderFile")}
         ${field("Shop","shop")}
@@ -28,6 +28,14 @@
         ${field("Position x,y,z","pos")}
         ${field("Scale","scale")}
         <input type="submit" class="button">
+    </table>
+    <p>-------------------------------------------------------------------------------------------------</p>
+    <h3>Repeat Number of Objects</h3>
+    <table align="center" class="formadd">
+        ${field("Number Of Repeats","repeat")}
+        ${field("Position x,y,z","reappos")}
+        ${field("Scale","reapscale")}
+        <input type="submit" class="button2">
     </table>
   </form>
 </%block>

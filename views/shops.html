@@ -1,0 +1,9 @@
+<%inherit file="layout.html"/>
+<%block name="pageTitle">Shop Central | Explore Shops</%block>
+
+<%block name="pageBody">
+  <h1 id = "title">Shop Central | Explore Shops</h1>
+  %for shop in shops:
+  <a href="/items/${shop}">${shop}</a>
+  %endfor
+</%block>

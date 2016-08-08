@@ -1,0 +1,25 @@
+<%inherit file="layout.html"/>
+<%block name="pageTitle">Shop Central | Explore Shops</%block>
+
+<%block name="pageBody">
+  <h1 id = "title">Shop Central | Explore Shops</h1>
+  <table>
+    <tr>
+        %for field in fields:
+            <td>${field}</td>
+        %endfor
+        <td>edit link</td>
+    </tr>
+  %for item in stock:
+    <tr>
+        %for field in fields:
+            <td>${item[field]}</td>
+        %endfor
+
+        <td>
+            <a href="/edit/${item["_id"]}">edit link</a>
+        </td>
+    </tr>
+  %endfor
+  </table>
+</%block>

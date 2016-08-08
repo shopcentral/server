@@ -6,6 +6,7 @@ import cgi
 import re
 import pymongo
 import bottle
+from bson.objectid import ObjectId
 from bottle import route,post,default_app,run,static_file,request
 from bottle import mako_template as template
 from datetime import datetime
@@ -63,7 +64,7 @@ def jsonTransver(store='central'):
 def showsavefile():
     parms= dict(description='',name='',price='',gender='',
                 blenderFile='',shop='',place="",pos="", scale="")
-    return template('savefile.html',**parms)
+    return template('savefile.html',field_dict=parms) #**parms)
     
 @bottle.post('/savefile')
 def savefile():
@@ -72,6 +73,35 @@ def savefile():
     print('form',form.keys())
     database.stock.insert(form)
     return showsavefile()
+
+@bottle.route('/shops')
+def showshopfile():
+    shops = [shop for shop in database.stock.find().distinct("shop")]
+    print("shops",shops)
+    return template('shops.html',shops=shops)
+
+@bottle.route('/items/<shop>')
+def showitems(shop):
+    stock = [stock for stock in database.stock.find({"shop":shop})]
+    print("shops",stock)
+    fields= ["name","place","price"]
+    return template('stock.html',stock=stock,fields=fields)
+
+@bottle.route('/edit/<_id>')
+def showsaveedit(_id):
+    read = database.stock.find_one({"_id":ObjectId(_id)})
+    print(read)
+    parms= dict(description='',name='',price='',gender='',
+                blenderFile='',shop='',place="",pos="", scale="")
+    return template('savefile.html',field_dict=read) #**parms)
+    
+@bottle.post('/edit/<_id>')
+def saveedit(_id):
+    print('dir',request.method)
+    form=request.forms
+    print('form',form.keys())
+    database.stock.update({"_id":ObjectId(_id)},form)
+    return showitems(form["shop"])
 
 @bottle.route('/hello/<name>')
 def show_name(name='(you have no name)'):
