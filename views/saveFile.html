@@ -14,14 +14,15 @@
 
 <%block name="pageBody">
   <h1 id = "title">Shop Central | Contribute Stock</h1>
-  <p>If you have some stock you want to contribute to my VR mall just fill out this simple form.</p><br>
+  <p>If you have some stock you want to contribute to my VR mall just fill out this simple form.</p>
+  <p>No Personal Details Needed</p>
   <h3>The form:</h3>
   <form method="post">
     <table align="center" class="formadd">
-        ${field("Name","name")}
+        ${field("Name Of Object","name")}
         ${field("Description(optional)","description")}
         ${field("Gender(only for clothes)","gender")}
-        ${field("Price","price")}
+        ${field("Price Of Object","price")}
         ${field("Blender File Name","blenderFile")}
         ${field("Shop","shop")}
         ${field("Place","place")}

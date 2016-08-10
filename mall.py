@@ -11,6 +11,7 @@ from bottle import route,post,default_app,run,static_file,request
 from bottle import mako_template as template
 from datetime import datetime
 from siteSettings import Site
+from collections import namedtuple
 
 
 hellostr= """<h1>Hello {}</h1>"""
@@ -27,16 +28,20 @@ def main(folder='', path='index.html'):
 
 application = default_app()
 
+XYZ=namedtuple('XYZ','x y z')
+
 @bottle.route('/bourne/<store>')
 def jsonTransver(store='central'):
+    def dopos(string):
+        if isinstance(string,list):
+            return XYZ(*string)
+        return XYZ(*[float(s) for s in string.split(',')])            
     def process(stock):
         def field(key,value):
             def tolist(string):
                 if not string:
                     return ''
-                if not isinstance(string,list):
-                    string = [float(s) for s in string.split(',')]
-                return {'x':string[0],'y':string[1],'z':string[2]}
+                return dopos(string)._asdict()
             
             mapfld={'pos':tolist}
             if key in mapfld:
@@ -55,6 +60,25 @@ def jsonTransver(store='central'):
     def sorter(item):
         return item['place']
     ans = [process(stock) for stock in database.stock.find({"shop":store})]
+    #print('ans',ans)
+    dups =[]
+    for dup in ans:
+        if isinstance(dup,dict) and dup.get('repeat'):
+            repeat= int(dup['repeat'])
+            repos= dopos(dup['reappos'])
+            pos=XYZ(**dup['pos'])
+            repos=XYZ( repos.x - pos.x , repos.y - pos.y ,repos.z - pos.z)
+            scale= 1 if not dup['scale'] else float(dup['scale'])
+
+            thispos=dup['pos'].copy()
+            for count in range(repeat):
+                ducopy=dup.copy()
+                pos=XYZ( repos.x + pos.x , repos.y + pos.y ,repos.z + pos.z)
+                ducopy['pos']=pos._asdict()
+                dups+=[ducopy]
+    #print('dups',dups)    
+    ans+=dups  
+        
     ans.sort(key=sorter)
     print(ans)
     return {"items":ans}
