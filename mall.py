@@ -67,7 +67,7 @@ def jsonTransver(store='central'):
             repeat= int(dup['repeat'])
             repos= dopos(dup['reappos'])
             pos=XYZ(**dup['pos'])
-            repos=XYZ( repos.x - pos.x , repos.y - pos.y ,repos.z - pos.z)
+            #repos=XYZ( repos.x - pos.x , repos.y - pos.y ,repos.z - pos.z)
             scale= 1 if not dup['scale'] else float(dup['scale'])
 
             thispos=dup['pos'].copy()
