@@ -63,21 +63,27 @@ def jsonTransver(store='central'):
     #print('ans',ans)
     dups =[]
     for dup in ans:
+        # loop for items to repreat
         if isinstance(dup,dict) and dup.get('repeat'):
             repeat= int(dup['repeat'])
             repos= dopos(dup['reappos'])
             pos=XYZ(**dup['pos'])
             #repos=XYZ( repos.x - pos.x , repos.y - pos.y ,repos.z - pos.z)
-            scale= 1 if not dup['scale'] else float(dup['scale'])
+            #scale= 1 if not dup['scale'] else float(dup['scale'])
+            loopscale=1 if not dup['reapscale'] else float(dup['reapscale'])
+            scale=loopscale
 
             thispos=dup['pos'].copy()
             for count in range(repeat):
                 ducopy=dup.copy()
                 pos=XYZ( repos.x + pos.x , repos.y + pos.y ,repos.z + pos.z)
                 ducopy['pos']=pos._asdict()
+                if ducopy['scale']:
+                    ducopy['scale']=float(ducopy['scale'])*loopscale
+                    loopscale*=scale
                 dups+=[ducopy]
     #print('dups',dups)    
-    ans+=dups  
+    ans+=dups  #add in the repeats
         
     ans.sort(key=sorter)
     print(ans)
